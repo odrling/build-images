@@ -26,10 +26,8 @@ jobs:
       matrix:
         config:
           - target: ""
-            platform: linux/amd64
             name: x86_64
           - target: aarch64-linux-gnu
-            platform: linux/arm64
             name: aarch64
 
     steps:
@@ -52,7 +50,6 @@ jobs:
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
-          platforms: ${{ matrix.config.platform }}
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ github.ref_name }}-${{ matrix.config.name }}
           labels: ${{ steps.meta.outputs.labels }}
