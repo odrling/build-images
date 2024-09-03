@@ -38,13 +38,13 @@ apt-get -y install libopus-dev libx264-dev
 
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
-/deps/ffmpeg/configure --logfile=/dev/stderr --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto --disable-decoders --disable-encoders --disable-swscale --disable-swresample --disable-avdevice --disable-postproc --disable-demuxers --enable-zlib --enable-encoder=libx264 --enable-encoder=libopus
+/deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto --disable-decoders --disable-encoders --disable-swscale --disable-swresample --disable-avdevice --disable-postproc --disable-demuxers --enable-zlib --enable-encoder=libx264 --enable-encoder=libopus
 make -j$(nproc)
 make install
 
 mkdir -p /deps/ffmpeg_build
 cd /deps/ffmpeg_build
-/deps/ffmpeg/configure --logfile=/dev/stderr --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-postproc --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --toolchain=hardened --enable-lto=auto ${ffmpeg_args}
+/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-postproc --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --toolchain=hardened --enable-lto=auto ${ffmpeg_args}
 make -j$(nproc)
 make install
 
