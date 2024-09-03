@@ -40,6 +40,8 @@ cd /deps/ffmpeg_build
 make -j$(nproc)
 make install
 
+apt-get -y install ffmpeg
+
 rm -rf /deps /build
 apt-get clean
 rm -rf /var/lib/apt/lists/*
