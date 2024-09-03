@@ -38,8 +38,8 @@ apt-get -y install libopus-dev libx264-dev zlib1g-dev
 
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
-/deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto --disable-decoders --disable-encoders --disable-swscale --disable-swresample --disable-avdevice --disable-postproc --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus
-make -j$(nproc)
+PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto --disable-decoders --disable-encoders --disable-swscale --disable-swresample --disable-avdevice --disable-postproc --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus
+PKG_CONFIG_SYSROOT_DIR="" make -j$(nproc)
 make install
 
 mkdir -p /deps/ffmpeg_build
