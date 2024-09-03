@@ -20,7 +20,7 @@ fi
 
 cd /deps/libass
 cp -r /build/subprojects .
-meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled $cross_args
+meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dfribidi:bin=false $cross_args
 meson install -C /deps/libass_build
 
 rm -rf /deps /build
