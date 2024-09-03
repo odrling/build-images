@@ -24,3 +24,5 @@ meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -D
 meson install -C /deps/libass_build
 
 rm -rf /deps /build
+apt-get clean
+rm -rf /var/lib/apt/lists/*
