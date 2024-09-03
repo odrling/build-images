@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: ${{ matrix.config.name }} build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,6 +21,16 @@ jobs:
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
+
+    strategy:
+      matrix:
+        config:
+          - target: ""
+            platform: linux/amd64
+            name: x86_64
+          - target: aarch64-linux-gnu
+            platform: linux/arm64
+            name: aarch64
 
     steps:
       - uses: actions/checkout@v4
@@ -42,10 +52,12 @@ jobs:
         id: build-image
         uses: redhat-actions/buildah-build@v2
         with:
+          platforms: ${{ matrix.config.platform }}
           image: ${{ env.IMAGE_NAME }}
-          tags: ${{ github.ref_name }}
+          tags: ${{ github.ref_name }}-${{ matrix.config.name }}
           labels: ${{ steps.meta.outputs.labels }}
           containerfiles: Containerfile
+          build-args: TARGET=${{ matrix.config.target }}
           extra-args: --cap-add=SYS_PTRACE
 
       - name: Push image
