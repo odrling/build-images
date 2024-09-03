@@ -13,7 +13,7 @@ on:
 
 jobs:
   build:
-    name: ${{ matrix.config.name }} build
+    name: ${{ matrix.config.arch }} build
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -26,9 +26,9 @@ jobs:
       matrix:
         config:
           - target: ""
-            name: x86_64
+            arch: x86_64
           - target: aarch64-linux-gnu
-            name: aarch64
+            arch: aarch64
 
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: ${{ env.IMAGE_NAME }}
-          tags: ${{ github.ref_name }}-${{ matrix.config.name }}
+          tags: ${{ github.ref_name }}-${{ matrix.config.arch }}
           labels: ${{ steps.meta.outputs.labels }}
           containerfiles: Containerfile
           build-args: TARGET=${{ matrix.config.target }}
@@ -61,7 +61,7 @@ jobs:
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ github.ref_name }}
+          tags: ${{ github.ref_name }}-${{ matrix.config.arch }}
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
