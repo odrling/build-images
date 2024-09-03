@@ -40,7 +40,13 @@ cd /deps/ffmpeg_build
 make -j$(nproc)
 make install
 
-apt-get -y install ffmpeg
+apt-get -y install libopus-dev libx264-dev
+
+mkdir -p /deps/ffmpeg_exe_build
+cd /deps/ffmpeg_exe_build
+/deps/ffmpeg/configure --logfile=/dev/stderr --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto
+make -j$(nproc)
+make install
 
 rm -rf /deps /build
 apt-get clean
