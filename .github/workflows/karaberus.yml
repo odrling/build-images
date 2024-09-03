@@ -55,7 +55,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           containerfiles: Containerfile
           build-args: TARGET=${{ matrix.config.target }}
-          extra-args: --cap-add=SYS_PTRACE
+          extra-args: -v $PWD/build:/build
 
       - name: Push image
         id: push-image
