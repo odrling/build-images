@@ -18,7 +18,7 @@ if [ ! -d /deps/zlib ]; then
 fi
 mkdir -p /deps/zlib_build
 cd /deps/zlib_build
-cmake ${cmake_args} /deps/zlib
+CFLAGS="-fhardened" cmake ${cmake_args} /deps/zlib
 make -j$(ncproc)
 make install
 
@@ -27,7 +27,7 @@ if [ ! -d /deps/libass ]; then
     ln -s /build/subprojects /deps/libass
 fi
 
-meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
+meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
 meson install -C /deps/libass_build
 
 if [ ! -d /deps/ffmpeg ]; then
@@ -38,13 +38,13 @@ apt-get -y install libopus-dev libx264-dev zlib1g-dev
 
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
-PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --toolchain=hardened --enable-lto=auto --disable-decoders --disable-encoders --disable-postproc --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus --enable-decoder=wrapped_avframe --enable-decoder=pcm_s16le --enable-filter=aresample --enable-filter=scale
+PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --extra-cflags=-fhardened --enable-lto=auto --disable-decoders --disable-encoders --disable-postproc --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus --enable-decoder=wrapped_avframe --enable-decoder=pcm_s16le --enable-filter=aresample --enable-filter=scale
 PKG_CONFIG_SYSROOT_DIR="" make -j$(nproc)
 make install
 
 mkdir -p /deps/ffmpeg_build
 cd /deps/ffmpeg_build
-/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-postproc --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --toolchain=hardened --enable-lto=auto --enable-version3 ${ffmpeg_args}
+/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-postproc --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --extra-cflags=-fhardened --enable-lto=auto --enable-version3 ${ffmpeg_args}
 make -j$(nproc)
 make install
 
