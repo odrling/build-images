@@ -18,9 +18,9 @@ if [ ! -d /deps/zlib ]; then
 fi
 mkdir -p /deps/zlib_build
 cd /deps/zlib_build
-CFLAGS="-fhardened" cmake ${cmake_args} /deps/zlib
-make -j$(ncproc)
-make install
+CFLAGS="-fhardened" cmake ${cmake_args} -G Ninja /deps/zlib
+ninja
+ninja install
 
 if [ ! -d /deps/libass ]; then
     git clone --depth 1 https://github.com/libass/libass.git /deps/libass
