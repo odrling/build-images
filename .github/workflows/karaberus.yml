@@ -18,7 +18,7 @@ on:
 jobs:
   build:
     name: ${{ matrix.config.arch }} build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.config.runner }}
     permissions:
       contents: read
       packages: write
@@ -31,8 +31,10 @@ jobs:
         config:
           - target: ""
             arch: x86_64
-          - target: aarch64-linux-gnu
+            runner: "ubuntu-24.04"
+          - target: ""
             arch: aarch64
+            runner: "ubuntu-24.04-arm"
 
     steps:
       - uses: actions/checkout@v4
