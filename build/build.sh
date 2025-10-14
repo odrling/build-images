@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-GCC_VER=14
+GCC_VER=15
 if [ -z "${TARGET}" ]; then
     cross_args="--native-file /build/native.ini"
     apt-get -y install gcc-${GCC_VER} g++-${GCC_VER}
