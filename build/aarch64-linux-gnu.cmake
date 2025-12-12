@@ -2,8 +2,8 @@
 set(CMAKE_SYSTEM_NAME Linux)
 
 # which compilers to use for C and C++
-set(CMAKE_C_COMPILER   aarch64-linux-gnu-gcc-14)
-set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++-14)
+set(CMAKE_C_COMPILER   aarch64-linux-gnu-gcc-15)
+set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++-15)
 
 # where is the target environment located
 set(CMAKE_FIND_ROOT_PATH  /usr/aarch64-linux-gnu)
