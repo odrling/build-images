@@ -1,9 +1,11 @@
 FROM docker.io/debian:sid-slim
 
 ARG TARGET=""
+ARG GOVER="1.26"
 
 RUN export DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install golang-1.26-go npm meson git nasm mold cmake
+RUN apt-get -y install golang-${GOVER}-go npm meson git nasm mold cmake
+ENV PATH "/usr/lib/go-${GOVER}/bin:$PATH"
 COPY build/ /build
 RUN TARGET=${TARGET} sh /build/build.sh
