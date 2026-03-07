@@ -9,7 +9,7 @@ if [ -z "${TARGET}" ]; then
 
     # apparently exists for x86_64 but not aarch64 (?)
     [ -x /usr/bin/gcc ] || ln -s /usr/bin/gcc-${GCC_VER} /usr/bin/gcc
-    [ -x /usr/bin/g++ ] ln -s /usr/bin/g++-${GCC_VER} /usr/bin/g++
+    [ -x /usr/bin/g++ ] || ln -s /usr/bin/g++-${GCC_VER} /usr/bin/g++
 else
     arch=$(echo ${TARGET} | cut -d- -f1)
     cmake_args="-DCMAKE_TOOLCHAIN_FILE=/build/${TARGET}.cmake -DCMAKE_INSTALL_PREFIX=/usr/${TARGET}"
