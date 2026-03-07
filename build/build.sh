@@ -22,20 +22,20 @@ else
     export PKG_CONFIG_SYSROOT_DIR="/usr/${TARGET}"
 fi
 
-if [ "${BUILD_LIBASS}" = y ]; then
-    if [ ! -d /deps/zlib ]; then
-        git clone --depth 1 -b 2.3.x https://github.com/zlib-ng/zlib-ng.git /deps/zlib
-    fi
-    mkdir -p /deps/zlib_build
-    cd /deps/zlib_build
-    CFLAGS="-fhardened" cmake -DZLIB_COMPAT=ON ${cmake_args} -G Ninja /deps/zlib
-    ninja
-    ninja install
+if [ ! -d /deps/zlib ]; then
+    git clone --depth 1 -b 2.3.x https://github.com/zlib-ng/zlib-ng.git /deps/zlib
 fi
+mkdir -p /deps/zlib_build
+cd /deps/zlib_build
+CFLAGS="-fhardened" cmake -DZLIB_COMPAT=ON ${cmake_args} -G Ninja /deps/zlib
+ninja
+ninja install
 
-if [ ! -d /deps/libass ]; then
-    git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
-    ln -s /build/subprojects /deps/libass
+if [ "${BUILD_LIBASS}" = y ]; then
+    if [ ! -d /deps/libass ]; then
+        git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
+        ln -s /build/subprojects /deps/libass
+    fi
 fi
 
 meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
