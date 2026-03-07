@@ -37,7 +37,7 @@ meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -D
 meson install -C /deps/libass_build
 
 if [ ! -d /deps/ffmpeg ]; then
-    git clone --depth 1 --branch release/7.0 https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
+    git clone --depth 1 --branch release/8.0 https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
 fi
 
 apt-get -y install libopus-dev libx264-dev zlib1g-dev
