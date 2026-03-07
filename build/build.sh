@@ -20,11 +20,11 @@ else
 fi
 
 if [ ! -d /deps/zlib ]; then
-    git clone --depth 1 -b master https://github.com/madler/zlib.git /deps/zlib
+    git clone --depth 1 -b 2.3.x https://github.com/zlib-ng/zlib-ng.git /deps/zlib
 fi
 mkdir -p /deps/zlib_build
 cd /deps/zlib_build
-CFLAGS="-fhardened" cmake ${cmake_args} -G Ninja /deps/zlib
+CFLAGS="-fhardened" cmake -DZLIB_COMPAT=ON ${cmake_args} -G Ninja /deps/zlib
 ninja
 ninja install
 
