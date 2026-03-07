@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 GCC_VER=15
+GCL_VER=v2.11.1
+
 if [ -z "${TARGET}" ]; then
     cross_args="--native-file /build/native.ini"
     apt-get -y install gcc-${GCC_VER} g++-${GCC_VER}
@@ -48,6 +50,9 @@ cd /deps/ffmpeg_build
 make -j$(nproc)
 make install
 
+go install "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GCL_VER}"
+
+go clean -cache -modcache
 rm -rf /deps /build
 apt-get clean
 rm -rf /var/lib/apt/lists/*
