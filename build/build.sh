@@ -49,13 +49,13 @@ apt-get -y install libopus-dev libx264-dev zlib1g-dev
 
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
-PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --extra-cflags=-fhardened --enable-lto=auto --disable-decoders --disable-encoders --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus --enable-decoder=wrapped_avframe --enable-decoder=pcm_s16le --enable-filter=aresample --enable-filter=scale
+PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --extra-cflags=-fhardened --disable-decoders --disable-encoders --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus --enable-decoder=wrapped_avframe --enable-decoder=pcm_s16le --enable-filter=aresample --enable-filter=scale
 PKG_CONFIG_SYSROOT_DIR="" make -j$(nproc)
 make install
 
 mkdir -p /deps/ffmpeg_build
 cd /deps/ffmpeg_build
-/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --extra-cflags=-fhardened --enable-lto=auto --enable-version3 ${ffmpeg_args}
+/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-avfilter --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --extra-cflags=-fhardened --enable-version3 ${ffmpeg_args}
 make -j$(nproc)
 make install
 
