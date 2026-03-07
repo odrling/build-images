@@ -3,9 +3,12 @@ set -e
 GCC_VER=15
 GCL_VER=v2.11.1
 
+BUILD_LIBASS=y
+
 if [ -z "${TARGET}" ]; then
     cross_args="--native-file /build/native.ini"
-    apt-get -y install gcc-${GCC_VER} g++-${GCC_VER}
+    apt-get -y install gcc-${GCC_VER} g++-${GCC_VER} libass-dev
+    BUILD_LIBASS=n
 
     # apparently exists for x86_64 but not aarch64 (?)
     [ -x /usr/bin/gcc ] || ln -s /usr/bin/gcc-${GCC_VER} /usr/bin/gcc
@@ -19,14 +22,16 @@ else
     export PKG_CONFIG_SYSROOT_DIR="/usr/${TARGET}"
 fi
 
-if [ ! -d /deps/zlib ]; then
-    git clone --depth 1 -b 2.3.x https://github.com/zlib-ng/zlib-ng.git /deps/zlib
+if [ "${BUILD_LIBASS}" = y ]; then
+    if [ ! -d /deps/zlib ]; then
+        git clone --depth 1 -b 2.3.x https://github.com/zlib-ng/zlib-ng.git /deps/zlib
+    fi
+    mkdir -p /deps/zlib_build
+    cd /deps/zlib_build
+    CFLAGS="-fhardened" cmake -DZLIB_COMPAT=ON ${cmake_args} -G Ninja /deps/zlib
+    ninja
+    ninja install
 fi
-mkdir -p /deps/zlib_build
-cd /deps/zlib_build
-CFLAGS="-fhardened" cmake -DZLIB_COMPAT=ON ${cmake_args} -G Ninja /deps/zlib
-ninja
-ninja install
 
 if [ ! -d /deps/libass ]; then
     git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
