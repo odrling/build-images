@@ -6,8 +6,8 @@ GCL_VER=v2.11.1
 if [ -z "${TARGET}" ]; then
     cross_args="--native-file /build/native.ini"
     apt-get -y install gcc-${GCC_VER} g++-${GCC_VER}
-    export CC=gcc-${GCC_VER}
-    export CXX=g++-${GCC_VER}
+    ln -s /usr/bin/gcc-${GCC_VER} /usr/bin/gcc
+    ln -s /usr/bin/g++-${GCC_VER} /usr/bin/gcc
 else
     arch=$(echo ${TARGET} | cut -d- -f1)
     cmake_args="-DCMAKE_TOOLCHAIN_FILE=/build/${TARGET}.cmake -DCMAKE_INSTALL_PREFIX=/usr/${TARGET}"
