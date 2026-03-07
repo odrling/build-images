@@ -36,10 +36,10 @@ if [ "${BUILD_LIBASS}" = y ]; then
         git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
         ln -s /build/subprojects /deps/libass
     fi
-fi
 
-meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
-meson install -C /deps/libass_build
+    meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
+    meson install -C /deps/libass_build
+fi
 
 if [ ! -d /deps/ffmpeg ]; then
     git clone --depth 1 --branch release/8.0 https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
