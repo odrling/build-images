@@ -29,7 +29,7 @@ ninja
 ninja install
 
 if [ ! -d /deps/libass ]; then
-    git clone --depth 1 https://github.com/libass/libass.git /deps/libass
+    git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
     ln -s /build/subprojects /deps/libass
 fi
 
