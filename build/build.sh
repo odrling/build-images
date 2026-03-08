@@ -60,6 +60,7 @@ make -j$(nproc)
 make install
 
 go install "github.com/golangci/golangci-lint/v2/cmd/golangci-lint@${GCL_VER}"
+ln -s $(go env GOPATH)/bin/golangci-lint /usr/bin/
 
 go clean -cache -modcache
 rm -rf /deps /build
