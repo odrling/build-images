@@ -1,6 +1,6 @@
 #!/bin/sh
 set -e
-GCC_VER=15
+GCC_VER=16
 GCL_VER=v2.11.2
 
 BUILD_LIBASS=y
