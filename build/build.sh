@@ -3,15 +3,16 @@ set -e
 GCC_VER=16
 GCL_VER=v2.11.2
 
-LIBASS_VER=0.17.5
-FFMPEG_VER=9.0
+ZLIB_VER="v1.3.2"
+LIBASS_VER="0.17.5"
+FFMPEG_VER="9.0"
 
 if [ ! -d /deps/zlib ]; then
-    git clone --depth 1 -b master https://github.com/madler/zlib.git /deps/zlib
+    git clone --depth 1 -b "${ZLIB_VER}" https://github.com/madler/zlib.git /deps/zlib
 fi
 mkdir -p /deps/zlib_build
 cd /deps/zlib_build
-CFLAGS="-fhardened -flto" cmake ${cmake_args} -G Ninja /deps/zlib
+cmake ${cmake_args} -G Ninja /deps/zlib
 ninja
 ninja install
 
