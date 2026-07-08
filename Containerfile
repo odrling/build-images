@@ -1,11 +1,5 @@
-FROM docker.io/debian:sid-slim
+FROM cgr.dev/chainguard/go:latest-dev
 
-ARG TARGET=""
-ARG GOVER="1.26"
-
-RUN export DEBIAN_FRONTEND="noninteractive"
-RUN apt-get update && apt-get -y upgrade
-RUN apt-get -y install golang-${GOVER}-go npm meson git nasm cmake
-ENV PATH "/usr/lib/go-${GOVER}/bin:$PATH"
+RUN apk add npm meson git nasm cmake
 COPY build/ /build
-RUN TARGET=${TARGET} sh /build/build.sh
+RUN sh /build/build.sh

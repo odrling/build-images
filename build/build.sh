@@ -3,24 +3,8 @@ set -e
 GCC_VER=16
 GCL_VER=v2.11.2
 
-BUILD_LIBASS=y
-
-if [ -z "${TARGET}" ]; then
-    cross_args="--native-file /build/native.ini"
-    apt-get -y install gcc-${GCC_VER} g++-${GCC_VER} libass-dev
-    BUILD_LIBASS=n
-
-    # apparently exists for x86_64 but not aarch64 (?)
-    [ -x /usr/bin/gcc ] || ln -s /usr/bin/gcc-${GCC_VER} /usr/bin/gcc
-    [ -x /usr/bin/g++ ] || ln -s /usr/bin/g++-${GCC_VER} /usr/bin/g++
-else
-    arch=$(echo ${TARGET} | cut -d- -f1)
-    cmake_args="-DCMAKE_TOOLCHAIN_FILE=/build/${TARGET}.cmake -DCMAKE_INSTALL_PREFIX=/usr/${TARGET}"
-    ffmpeg_args="--cross-prefix=${TARGET}- --pkg-config=pkg-config --cc=${TARGET}-gcc-${GCC_VER} --prefix=/usr/${TARGET} --arch=${arch} --target-os=linux"
-    cross_args="--cross-file /build/${TARGET}.ini"
-    apt-get -y install gcc-${GCC_VER}-${TARGET} g++-${GCC_VER}-${TARGET} qemu-user-static
-    export PKG_CONFIG_SYSROOT_DIR="/usr/${TARGET}"
-fi
+LIBASS_VER=0.17.5
+FFMPEG_VER=9.0
 
 if [ ! -d /deps/zlib ]; then
     git clone --depth 1 -b master https://github.com/madler/zlib.git /deps/zlib
@@ -31,21 +15,19 @@ CFLAGS="-fhardened" cmake ${cmake_args} -G Ninja /deps/zlib
 ninja
 ninja install
 
-if [ "${BUILD_LIBASS}" = y ]; then
-    if [ ! -d /deps/libass ]; then
-        git clone --depth 1 --branch 0.17.4 https://github.com/libass/libass.git /deps/libass
-        ln -s /build/subprojects /deps/libass
-    fi
-
-    meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
-    meson install -C /deps/libass_build
+if [ ! -d /deps/libass ]; then
+    git clone --depth 1 --branch "${LIBASS_VER}" https://github.com/libass/libass.git /deps/libass
+    ln -s /build/subprojects /deps/libass
 fi
+
+meson setup /deps/libass_build /deps/libass --reconfigure --buildtype release -Db_lto=true -Db_lto_mode=thin -Db_pie=true -Dc_args=-fhardened -Dcpp_args=-fhardened -Db_sanitize=undefined --auto-features=disabled -Ddefault_library=shared -Dasm=enabled -Dfontconfig=enabled -Dzlib:default_library=shared -Dfribidi:bin=false $cross_args
+meson install -C /deps/libass_build
 
 if [ ! -d /deps/ffmpeg ]; then
-    git clone --depth 1 --branch release/8.0 https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
+    git clone --depth 1 --branch "release/${FFMPEG_VER}" https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
 fi
 
-apt-get -y install libopus-dev libx264-dev zlib1g-dev
+apk add libopus-dev x264-dev zlib-dev
 
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
