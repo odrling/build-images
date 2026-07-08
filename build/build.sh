@@ -44,5 +44,3 @@ ln -s $(go env GOPATH)/bin/golangci-lint /usr/bin/
 
 go clean -cache -modcache
 rm -rf /deps /build
-apt-get clean
-rm -rf /var/lib/apt/lists/*
