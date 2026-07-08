@@ -27,8 +27,6 @@ if [ ! -d /deps/ffmpeg ]; then
     git clone --depth 1 --branch "release/${FFMPEG_VER}" https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
 fi
 
-apk add libopus-dev x264-dev zlib-dev
-
 mkdir -p /deps/ffmpeg_exe_build
 cd /deps/ffmpeg_exe_build
 PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure --enable-static --disable-shared --disable-doc --extra-cflags=-fhardened --disable-decoders --disable-encoders --disable-demuxers --enable-zlib --enable-gpl --enable-version3 --enable-libx264 --enable-libopus --enable-encoder=libx264 --enable-encoder=libopus --enable-decoder=wrapped_avframe --enable-decoder=pcm_s16le --enable-filter=aresample --enable-filter=scale
