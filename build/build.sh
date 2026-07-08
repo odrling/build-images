@@ -11,7 +11,7 @@ if [ ! -d /deps/zlib ]; then
 fi
 mkdir -p /deps/zlib_build
 cd /deps/zlib_build
-CFLAGS="-fhardened" cmake ${cmake_args} -G Ninja /deps/zlib
+CFLAGS="-fhardened -flto" cmake ${cmake_args} -G Ninja /deps/zlib
 ninja
 ninja install
 
