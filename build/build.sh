@@ -36,7 +36,7 @@ make install
 
 mkdir -p /deps/ffmpeg_build
 cd /deps/ffmpeg_build
-/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-filters --disable-swscale --disable-swresample --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --extra-cflags=-fhardened --enable-version3 --enable-filter=loudnorm ${ffmpeg_args}
+/deps/ffmpeg/configure --enable-shared --disable-static --disable-autodetect --disable-programs --disable-avdevice --disable-filters --disable-swscale --disable-doc --disable-muxers --disable-network --disable-encoders --disable-decoders --disable-bsfs --disable-protocols --enable-zlib --enable-decoder=aac --enable-decoder=flac --enable-decoder=mp3 --enable-decoder=ac3 --enable-decoder=opus --enable-decoder=vorbis --enable-filter=loudnorm --enable-filter=anullsink --extra-cflags=-fhardened --enable-version3 ${ffmpeg_args}
 make -j$(nproc)
 make install
 
