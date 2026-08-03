@@ -47,6 +47,7 @@ fi
 # ffmpeg (program) used by karaberus tests
 ffmpeg_exe_args=(
     --enable-static
+    --enable-pic
     --disable-shared
     --disable-doc
     --extra-cflags=-fhardened
@@ -96,6 +97,7 @@ ffmpeg_filters=(
 
 ffmpeg_configure_args=(
     --enable-shared
+    --enable-pic
     --disable-static
     --disable-autodetect
     --disable-programs
