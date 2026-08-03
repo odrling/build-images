@@ -54,7 +54,7 @@ jobs:
 
       - name: Build image
         id: build-image
-        uses: redhat-actions/buildah-build@v2
+        uses: redhat-actions/buildah-build@v3
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ github.ref_name }}-${{ matrix.config.arch }}
@@ -64,7 +64,7 @@ jobs:
 
       - name: Push image
         id: push-image
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@v3
         with:
           image: ${{ steps.build-image.outputs.image }}
           tags: ${{ github.ref_name }}-${{ matrix.config.arch }}
