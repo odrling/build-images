@@ -2,7 +2,7 @@
 set -e
 set -x
 
-GCL_VER=v2.11.2
+GCL_VER=v2.15.0
 ZLIB_VER="v1.3.2"
 LIBASS_VER="0.17.5"
 FFMPEG_VER="9.0"
