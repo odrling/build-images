@@ -74,6 +74,7 @@ ffmpeg_configure_args=(
     --disable-decoders
     --disable-bsfs
     --disable-protocols
+    --enable-filter=aresample
     --enable-zlib
     --enable-version3
 )
