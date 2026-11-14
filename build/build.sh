@@ -8,34 +8,6 @@ if [ ! -d /deps/ffmpeg ]; then
     git clone --depth 1 --branch "release/${FFMPEG_VER}" https://github.com/FFmpeg/FFmpeg.git /deps/ffmpeg
 fi
 
-# ffmpeg (program) used by karaberus tests
-ffmpeg_exe_args=(
-    --enable-static
-    --enable-pic
-    --disable-shared
-    --disable-doc
-    --disable-decoders
-    --disable-encoders
-    --disable-demuxers
-    --enable-zlib
-    --enable-gpl
-    --enable-version3
-    --enable-libx264
-    --enable-libopus
-    --enable-encoder=libx264
-    --enable-encoder=libopus
-    --enable-decoder=wrapped_avframe
-    --enable-decoder=pcm_s16le
-    --enable-filter=aresample
-    --enable-filter=scale
-)
-mkdir -p /deps/ffmpeg_exe_build
-cd /deps/ffmpeg_exe_build
-PKG_CONFIG_SYSROOT_DIR="" /deps/ffmpeg/configure "${ffmpeg_exe_args[@]}"
-PKG_CONFIG_SYSROOT_DIR="" make -j$(nproc)
-make install
-
-
 # ffmpeg (libraries) used by karaberus
 ffmpeg_decoders=(
     aac
@@ -74,7 +46,6 @@ ffmpeg_configure_args=(
     --disable-decoders
     --disable-bsfs
     --disable-protocols
-    --enable-filter=aresample
     --enable-zlib
     --enable-version3
 )
