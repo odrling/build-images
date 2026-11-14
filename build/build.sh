@@ -64,3 +64,6 @@ cd /deps/ffmpeg_build
 /deps/ffmpeg/configure "${ffmpeg_configure_args[@]}"
 make -j$(nproc)
 make install
+
+# rebuild dynamic linker config/cache
+ldconfig
