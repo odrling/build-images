@@ -27,6 +27,7 @@ ffmpeg_decoders=(
 
 ffmpeg_filters=(
     loudnorm
+    aresample
     anullsink
 )
 
