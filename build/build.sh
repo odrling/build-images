@@ -27,8 +27,6 @@ libass_meson_args=(
     -Db_lto=true
     -Db_lto_mode=thin
     -Db_pie=true
-    -Dc_args=-fhardened
-    -Dcpp_args=-fhardened
     -Db_sanitize=undefined
     --auto-features=disabled
     -Ddefault_library=shared
@@ -50,7 +48,6 @@ ffmpeg_exe_args=(
     --enable-pic
     --disable-shared
     --disable-doc
-    --extra-cflags=-fhardened
     --disable-decoders
     --disable-encoders
     --disable-demuxers
@@ -112,7 +109,6 @@ ffmpeg_configure_args=(
     --disable-bsfs
     --disable-protocols
     --enable-zlib
-    --extra-cflags=-fhardened
     --enable-version3
 )
 
